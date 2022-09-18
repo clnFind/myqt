@@ -134,14 +134,14 @@ class MainWindow(QMainWindow):
         # formLayout1 = QHBoxLayout(form1)
 
         label = QLabel(form1)
-        label.setGeometry(QRect(40, 50, 41, 31))
+        label.setGeometry(QRect(50, 50, 52, 31))
         # label.setStyleSheet("color:#f4f9ff;\n"
         #                          "font:12pt \'Arial\';\n"
         #                          "border-radius: 10px;\n"
         #                          "background: #171B2B;")
         label.setObjectName("label")
         # _translate = QCoreApplication.translate
-        label.setText(" 币种")
+        label.setText("  币种")
 
         self.comboBox_0 = QComboBox(form1)
         self.comboBox_0.setGeometry(QRect(100, 50, 111, 31))
@@ -171,7 +171,7 @@ class MainWindow(QMainWindow):
 
 
         label_1 = QLabel(form1)
-        label_1.setGeometry(QRect(300, 50, 52, 31))
+        label_1.setGeometry(QRect(270, 50, 71, 31))
         # label_1.setStyleSheet("color:#f4f9ff;\n"
         #                            "font:12pt \'Arial\';\n"
         #                            "border-radius: 10px;\n"
@@ -197,7 +197,7 @@ class MainWindow(QMainWindow):
 
 
         label_2 = QLabel(form1)
-        label_2.setGeometry(QRect(570, 50, 52, 31))
+        label_2.setGeometry(QRect(561, 50, 52, 31))
         # label_3.setStyleSheet("color:#f4f9ff;\n"
         #                            "font:12pt \'Arial\';\n"
         #                            "border-radius: 10px;\n"
