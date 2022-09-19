@@ -368,16 +368,52 @@ class MainUi(QtWidgets.QMainWindow):
 
     def page2(self):
         # 设置第二个面板
+        api_key_name = QtWidgets.QLabel('API KEY ')
+        api_key_name.setFont(qtawesome.font('fa', 16))
+        api_key_input = QtWidgets.QLineEdit()
+        api_key_input.setPlaceholderText("请输入key")
+
         form2 = QtWidgets.QWidget()
         form2.setObjectName('right_widget')
-        formLayout2 = QtWidgets.QHBoxLayout(form2)
 
-        label2 = QtWidgets.QLabel()
-        label2.setText("第二个面板")
-        label2.setSizePolicy(QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding))
-        label2.setAlignment(QtCore.Qt.AlignCenter)
-        label2.setFont(QtGui.QFont("Roman times", 50, QtGui.QFont.Bold))
-        formLayout2.addWidget(label2)
+        label = QtWidgets.QLabel(form2)
+        label.setGeometry(QtCore.QRect(50, 80, 52, 31))
+        label.setObjectName("label")
+        label.setText(" API KEY")
+
+        lineEdit = QtWidgets.QLineEdit(form2)
+        lineEdit.setGeometry(QtCore.QRect(150, 80, 360, 32))
+        lineEdit.setStyleSheet("font:12pt \'Arial\';\n"
+                                 "border-radius: 10px;\n"
+                                 "background: white;")
+        lineEdit.setText("")
+        lineEdit.setObjectName("lineEdit")
+
+        label1 = QtWidgets.QLabel(form2)
+        label1.setGeometry(QtCore.QRect(50, 150, 72, 31))
+
+        label1.setObjectName("label1")
+        # _translate = QCoreApplication.translate
+        label1.setText(" API SECRET")
+
+        lineEdit1 = QtWidgets.QLineEdit(form2)
+        lineEdit1.setGeometry(QtCore.QRect(150, 150, 360, 32))
+        lineEdit1.setStyleSheet("font:12pt \'Arial\';\n"
+                               "border-radius: 10px;\n"
+                               "background: white;")
+        lineEdit1.setText("")
+        lineEdit1.setObjectName("lineEdit1")
+
+        pushButton = QtWidgets.QPushButton(form2)
+        pushButton.setGeometry(QtCore.QRect(420, 220, 100, 32))
+        pushButton.setStyleSheet("color:#f4f9ff;\n"
+                                      "font:12pt \'Arial\';\n"
+                                      "border-radius: 14px;\n"
+                                      "background: #171B2B;\n"
+                                      "")
+        pushButton.setObjectName("pushButton")
+        pushButton.setText("绑定")
+
 
         form2.setStyleSheet('''
                           QWidget#right_widget{
@@ -389,6 +425,12 @@ class MainUi(QtWidgets.QMainWindow):
                             border-top-right-radius:10px;
                             border-bottom-right-radius:10px;
                           }
+                          QLineEdit{
+                            border:1px solid gray;
+                            width:300px;
+                            border-radius:10px;
+                            padding:2px 4px;
+                            }
 
                         ''')
         return form2
