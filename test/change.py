@@ -83,7 +83,7 @@ class MainWindow(QMainWindow):
         init_width = self.available_geometry.width() * 0.85
         init_height = self.available_geometry.height() * 0.85
         self.setWindowTitle(APP_NAME)
-        self.resize(init_width, init_height)
+        self.resize(int(init_width), int(init_height))
         # 实例化状态栏，设置状态栏
         self.statusBar = QStatusBar()
         self.setStatusBar(self.statusBar)

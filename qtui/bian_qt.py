@@ -22,6 +22,20 @@ class MainUi(QtWidgets.QMainWindow):
         self.main_layout.addWidget(self.right_widget,0,2,12,10) # 右侧部件在第0行第3列，占8行9列
         self.setCentralWidget(self.main_widget) # 设置窗口主部件
 
+        self.setWindowFlag(QtCore.Qt.FramelessWindowHint)  # 隐藏边框
+        self.main_layout.setSpacing(0)
+
+        self.main_widget.setStyleSheet('''
+                QWidget#left_widget{
+                background:#171B2B;
+                border-top:1px solid white;
+                border-bottom:1px solid white;
+                border-left:1px solid white;
+                border-top-left-radius:10px;
+                border-bottom-left-radius:10px;
+                }
+                ''')
+
     def init_left(self):
 
         self.left_widget = QtWidgets.QWidget() # 创建左侧部件
@@ -32,6 +46,17 @@ class MainUi(QtWidgets.QMainWindow):
         self.left_close = QtWidgets.QPushButton("") # 关闭按钮
         self.left_visit = QtWidgets.QPushButton("") # 空白按钮
         self.left_mini = QtWidgets.QPushButton("") # 最小化按钮
+
+        self.left_close.setFixedSize(15, 15)  # 设置关闭按钮的大小
+        self.left_visit.setFixedSize(15, 15)  # 设置按钮大小
+        self.left_mini.setFixedSize(15, 15)  # 设置最小化按钮大小
+
+        self.left_close.setStyleSheet(
+            '''QPushButton{background:#F76677;border-radius:5px;}QPushButton:hover{background:red;}''')
+        self.left_visit.setStyleSheet(
+            '''QPushButton{background:#F7D674;border-radius:5px;}QPushButton:hover{background:yellow;}''')
+        self.left_mini.setStyleSheet(
+            '''QPushButton{background:#6DDF6D;border-radius:5px;}QPushButton:hover{background:green;}''')
 
         self.left_label_1 = QtWidgets.QPushButton("每日推荐")
         self.left_label_1.setObjectName('left_label')
@@ -75,12 +100,46 @@ class MainUi(QtWidgets.QMainWindow):
         self.left_layout.addWidget(self.left_button_8, 11, 0,1,3)
         self.left_layout.addWidget(self.left_button_9, 12, 0, 1, 3)
 
+        self.left_widget.setStyleSheet('''
+          QPushButton{border:none;color:white;}
+          QPushButton#left_label{
+            border:none;
+            border-bottom:1px solid white;
+            font-size:18px;
+            font-weight:700;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+          }
+          QPushButton#left_button:hover{border-left:4px solid red;font-weight:700;}
+        ''')
+
+        self.setWindowOpacity(0.9)  # 设置窗口透明度
+        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)  # 设置窗口背景透明
+
     def init_right(self):
 
         self.right_widget = QtWidgets.QWidget() # 创建右侧部件
         self.right_widget.setObjectName('right_widget')
         self.right_layout = QtWidgets.QGridLayout()
         self.right_widget.setLayout(self.right_layout) # 设置右侧部件布局为网格
+
+        self.right_widget.setStyleSheet('''
+          QWidget#right_widget{
+            color:#232C51;
+            background:white;
+            border-top:1px solid darkGray;
+            border-bottom:1px solid darkGray;
+            border-right:1px solid darkGray;
+            border-top-right-radius:10px;
+            border-bottom-right-radius:10px;
+          }
+          QLabel#right_lable{
+            border:none;
+            font-size:16px;
+            font-weight:700;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+          }
+        ''')
+
 
 
  
