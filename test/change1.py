@@ -30,6 +30,9 @@ class MainUi(QtWidgets.QMainWindow):
 
         self.dataDisplay = QtWidgets.QStackedWidget()  # 右侧层叠窗口
         self.dataDisplay.addWidget(self.page1())
+        self.dataDisplay.addWidget(self.page2())
+        self.dataDisplay.addWidget(self.page3())
+        self.dataDisplay.addWidget(self.page4())
         # self.init_right()  # 初始化右侧空间
 
         self.main_layout.addWidget(self.left_widget, 0, 0, 12, 2)  # 左侧部件在第0行第0列，占8行3列
@@ -108,6 +111,11 @@ class MainUi(QtWidgets.QMainWindow):
         self.left_layout.addWidget(self.left_button_6, 7, 0, 1, 3)
         self.left_layout.addWidget(self.left_button_7, 8, 0, 1, 3)
 
+        self.left_button_1.clicked.connect(self.on_left_button1_clicked)
+        self.left_button_2.clicked.connect(self.on_left_button2_clicked)
+        self.left_button_3.clicked.connect(self.on_left_button3_clicked)
+        self.left_button_4.clicked.connect(self.on_left_button4_clicked)
+
 
         self.left_widget.setStyleSheet('''
           QPushButton{border:none;color:white;}
@@ -120,8 +128,6 @@ class MainUi(QtWidgets.QMainWindow):
           }
           QPushButton#left_button:hover{border-left:4px solid red;font-weight:700;}
         ''')
-
-
 
     def init_right(self):
         self.right_widget = QtWidgets.QWidget()  # 创建右侧部件
@@ -147,6 +153,19 @@ class MainUi(QtWidgets.QMainWindow):
           }
         ''')
 
+    def on_left_button1_clicked(self):
+        self.dataDisplay.setCurrentIndex(0)
+
+    def on_left_button2_clicked(self):
+        self.dataDisplay.setCurrentIndex(1)
+
+    def on_left_button3_clicked(self):
+        self.dataDisplay.setCurrentIndex(2)
+
+    def on_left_button4_clicked(self):
+        self.dataDisplay.setCurrentIndex(3)
+
+    # 隐藏边框后实现窗口移动
     def mousePressEvent(self, event):
         if event.button() == QtCore.Qt.LeftButton:
             self.m_flag = True
@@ -346,6 +365,85 @@ class MainUi(QtWidgets.QMainWindow):
 
 
         return form1
+
+    def page2(self):
+        # 设置第二个面板
+        form2 = QtWidgets.QWidget()
+        form2.setObjectName('right_widget')
+        formLayout2 = QtWidgets.QHBoxLayout(form2)
+
+        label2 = QtWidgets.QLabel()
+        label2.setText("第二个面板")
+        label2.setSizePolicy(QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding))
+        label2.setAlignment(QtCore.Qt.AlignCenter)
+        label2.setFont(QtGui.QFont("Roman times", 50, QtGui.QFont.Bold))
+        formLayout2.addWidget(label2)
+
+        form2.setStyleSheet('''
+                          QWidget#right_widget{
+                            color:#232C51;
+                            background:white;
+                            border-top:1px solid darkGray;
+                            border-bottom:1px solid darkGray;
+                            border-right:1px solid darkGray;
+                            border-top-right-radius:10px;
+                            border-bottom-right-radius:10px;
+                          }
+
+                        ''')
+        return form2
+
+    def page3(self):
+        # 设置第三个面板
+        form3 = QtWidgets.QWidget()
+        form3.setObjectName('right_widget')
+        formLayout3 = QtWidgets.QHBoxLayout(form3)
+        label3 = QtWidgets.QLabel()
+        label3.setText("第三个面板")
+        label3.setSizePolicy(QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding))
+        label3.setAlignment(QtCore.Qt.AlignCenter)
+        label3.setFont(QtGui.QFont("Roman times", 50, QtGui.QFont.Bold))
+        formLayout3.addWidget(label3)
+
+        form3.setStyleSheet('''
+                                  QWidget#right_widget{
+                                    color:#232C51;
+                                    background:white;
+                                    border-top:1px solid darkGray;
+                                    border-bottom:1px solid darkGray;
+                                    border-right:1px solid darkGray;
+                                    border-top-right-radius:10px;
+                                    border-bottom-right-radius:10px;
+                                  }
+
+                                ''')
+        return form3
+
+    def page4(self):
+
+        # 设置第四个面板
+        form4 = QtWidgets.QWidget()
+        form4.setObjectName('right_widget')
+        formLayout4 = QtWidgets.QHBoxLayout(form4)
+        label4 = QtWidgets.QLabel()
+        label4.setText("第四个面板")
+        label4.setSizePolicy(QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding))
+        label4.setAlignment(QtCore.Qt.AlignCenter)
+        label4.setFont(QtGui.QFont("Roman times", 50, QtGui.QFont.Bold))
+        formLayout4.addWidget(label4)
+        form4.setStyleSheet('''
+                                  QWidget#right_widget{
+                                    color:#232C51;
+                                    background:white;
+                                    border-top:1px solid darkGray;
+                                    border-bottom:1px solid darkGray;
+                                    border-right:1px solid darkGray;
+                                    border-top-right-radius:10px;
+                                    border-bottom-right-radius:10px;
+                                  }
+
+                                ''')
+        return form4
 
 
 def main():
