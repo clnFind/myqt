@@ -3,9 +3,30 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import sys
 import qtawesome
+from PyQt5.QtSql import QSqlQuery
+from PyQt5 import QtSql
+
 
 APP_NAME = '千里眼'
 NAME_LIST = ["BTC", "ETH", "LINK", "DOT", "EOS", "TRX", "ADA", "LTC", "BCH", "XRP", "BSV", "ETC", "FIL"]
+
+database = QtSql.QSqlDatabase.addDatabase('QSQLITE')
+database.setDatabaseName('api.db')
+database.open()
+
+# 判断sqlite数据库中的表是否存在，不存在就创建
+try:
+    create_api = '''
+    CREATE TABLE IF NOT EXISTS api_info
+    (id INTEGER PRIMARY KEY,
+    apikey varchar(128) DEFAULT NULL,
+    apisecret varchar(128) DEFAULT NULL);
+    '''
+    q = QSqlQuery()
+    q.exec_(create_api)
+except Exception as e:
+    print("Create table failed")
+    raise e
 
 
 class MainUi(QtWidgets.QMainWindow):
@@ -381,13 +402,13 @@ class MainUi(QtWidgets.QMainWindow):
         label.setObjectName("label")
         label.setText(" API KEY")
 
-        lineEdit = QtWidgets.QLineEdit(form2)
-        lineEdit.setGeometry(QtCore.QRect(150, 80, 360, 32))
-        lineEdit.setStyleSheet("font:12pt \'Arial\';\n"
+        self.api_key = QtWidgets.QLineEdit(form2)
+        self.api_key.setGeometry(QtCore.QRect(150, 80, 360, 32))
+        self.api_key.setStyleSheet("font:12pt \'Arial\';\n"
                                  "border-radius: 10px;\n"
                                  "background: white;")
-        lineEdit.setText("")
-        lineEdit.setObjectName("lineEdit")
+        self.api_key.setText("")
+        self.api_key.setObjectName("lineEdit")
 
         label1 = QtWidgets.QLabel(form2)
         label1.setGeometry(QtCore.QRect(50, 150, 72, 31))
@@ -396,13 +417,13 @@ class MainUi(QtWidgets.QMainWindow):
         # _translate = QCoreApplication.translate
         label1.setText(" API SECRET")
 
-        lineEdit1 = QtWidgets.QLineEdit(form2)
-        lineEdit1.setGeometry(QtCore.QRect(150, 150, 360, 32))
-        lineEdit1.setStyleSheet("font:12pt \'Arial\';\n"
+        self.api_secret = QtWidgets.QLineEdit(form2)
+        self.api_secret.setGeometry(QtCore.QRect(150, 150, 360, 32))
+        self.api_secret.setStyleSheet("font:12pt \'Arial\';\n"
                                "border-radius: 10px;\n"
                                "background: white;")
-        lineEdit1.setText("")
-        lineEdit1.setObjectName("lineEdit1")
+        self.api_secret.setText("")
+        self.api_secret.setObjectName("lineEdit1")
 
         pushButton = QtWidgets.QPushButton(form2)
         pushButton.setGeometry(QtCore.QRect(420, 220, 100, 32))
@@ -413,6 +434,8 @@ class MainUi(QtWidgets.QMainWindow):
                                       "")
         pushButton.setObjectName("pushButton")
         pushButton.setText("绑定")
+
+        pushButton.clicked.connect(self.api_save)
 
 
         form2.setStyleSheet('''
@@ -434,6 +457,29 @@ class MainUi(QtWidgets.QMainWindow):
 
                         ''')
         return form2
+
+    def api_save(self):
+
+        key_name = self.api_key.text()
+        secret_name = self.api_secret.text()
+        print(key_name)
+        print(secret_name)
+        api_select = """select apikey from api_info where apikey='{key}' and apisecret='{secret}'""".format(key=key_name,
+                                                                                                     secret=secret_name)
+        print(api_select)
+        ret_run = q.exec_(api_select)
+        result = q.next()
+        if ret_run and result:
+            print(result)
+        else:
+            # 插入信息
+            insert_tb_cmd = """insert into api_info (apikey, apisecret) values('%s', '%s')""" % (key_name, secret_name)
+            print(insert_tb_cmd)
+            if q.exec_(insert_tb_cmd):
+                print("success")
+            else:
+                print("fail")
+
 
     def page3(self):
         # 设置第三个面板
