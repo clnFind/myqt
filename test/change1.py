@@ -485,13 +485,96 @@ class MainUi(QtWidgets.QMainWindow):
         # 设置第三个面板
         form3 = QtWidgets.QWidget()
         form3.setObjectName('right_widget')
-        formLayout3 = QtWidgets.QHBoxLayout(form3)
-        label3 = QtWidgets.QLabel()
-        label3.setText("第三个面板")
-        label3.setSizePolicy(QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding))
-        label3.setAlignment(QtCore.Qt.AlignCenter)
-        label3.setFont(QtGui.QFont("Roman times", 50, QtGui.QFont.Bold))
-        formLayout3.addWidget(label3)
+
+        label = QtWidgets.QLabel(form3)
+        label.setGeometry(QtCore.QRect(50, 50, 52, 31))
+        # label.setStyleSheet("color:#f4f9ff;\n"
+        #                          "font:12pt \'Arial\';\n"
+        #                          "border-radius: 10px;\n"
+        #                          "background: #171B2B;")
+        label.setObjectName("label")
+        label.setText("  币种")
+
+        comboBox_0 = QtWidgets.QComboBox(form3)
+        comboBox_0.setGeometry(QtCore.QRect(100, 50, 111, 31))
+        comboBox_0.setStyleSheet("color:#171B2B;\n"
+                                      "font:12pt \'Arial\';\n"
+                                      "border-radius: 10px;\n"
+                                      "background: #E0E0E0;")
+        comboBox_0.setObjectName("comboBox_0")
+        comboBox_0.addItem("")
+        comboBox_0.addItem("")
+        comboBox_0.addItem("")
+        comboBox_0.addItem("")
+        comboBox_0.addItem("")
+        comboBox_0.addItem("")
+        comboBox_0.addItem("")
+        comboBox_0.addItem("")
+        comboBox_0.addItem("")
+        comboBox_0.addItem("")
+        comboBox_0.addItem("")
+        comboBox_0.addItem("")
+        comboBox_0.addItem("")
+
+        i = 0
+        for item in NAME_LIST:
+            comboBox_0.setItemText(i, item)
+            i += 1
+
+        curDateTime = QtCore.QDateTime.currentDateTime()
+        label_1 = QtWidgets.QLabel(form3)
+        label_1.setGeometry(QtCore.QRect(270, 50, 71, 31))
+        # label_1.setStyleSheet("color:#f4f9ff;\n"
+        #                            "font:12pt \'Arial\';\n"
+        #                            "border-radius: 10px;\n"
+        #                            "background: #171B2B;")
+        label_1.setObjectName("label_1")
+        label_1.setText("开始日期")
+
+        self.start_date = QtWidgets.QLineEdit(form3)
+        self.start_date.setGeometry(QtCore.QRect(360, 50, 111, 31))
+        self.start_date.setStyleSheet("font:12pt \'Arial\';\n"
+                                 "border-radius: 10px;\n"
+                                 "background: white;")
+        self.start_date.setText(curDateTime.toString("yyyy-MM-dd"))
+        self.start_date.setObjectName("lineEdit")
+        # self.start_date.clicked.connect(self.on_date_clicked)
+
+        label_2 = QtWidgets.QLabel(form3)
+        label_2.setGeometry(QtCore.QRect(560, 50, 52, 31))
+        # label_3.setStyleSheet("color:#f4f9ff;\n"
+        #                            "font:12pt \'Arial\';\n"
+        #                            "border-radius: 10px;\n"
+        #                            "background: #171B2B;")
+        label_2.setObjectName("label_2")
+        label_2.setText("结束日期")
+
+        self.end_date = QtWidgets.QLineEdit(form3)
+        self.end_date.setGeometry(QtCore.QRect(640, 50, 111, 31))
+        self.end_date.setStyleSheet("font:12pt \'Arial\';\n"
+                                 "border-radius: 10px;\n"
+                                 "background: white;")
+        self.end_date.setText(curDateTime.toString("yyyy-MM-dd"))
+        self.end_date.setObjectName("lineEdit")
+
+        checkButton = QtWidgets.QPushButton(form3)
+        checkButton.setGeometry(QtCore.QRect(800, 50, 60, 31))
+        checkButton.setStyleSheet("color:#f4f9ff;\n"
+                                 "font:12pt \'Arial\';\n"
+                                 "border-radius: 14px;\n"
+                                 "background: #171B2B;\n"
+                                 "")
+        checkButton.setObjectName("pushButton")
+        checkButton.setText("查询")
+
+        self.horizontalLayoutWidget = QtWidgets.QWidget(form3)
+        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(60, 120, 800, 400))
+        self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
+        self.horizontalLayout = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget)
+        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.table = QtWidgets.QTableWidget()
+        self.horizontalLayout.addWidget(self.table)
 
         form3.setStyleSheet('''
                                   QWidget#right_widget{
@@ -503,9 +586,19 @@ class MainUi(QtWidgets.QMainWindow):
                                     border-top-right-radius:10px;
                                     border-bottom-right-radius:10px;
                                   }
-
+                                  QLineEdit{
+                                    border:1px solid gray;
+                                    width:300px;
+                                    border-radius:10px;
+                                    padding:2px 4px;
+                                    }
                                 ''')
         return form3
+
+    def on_date_clicked(self):  # 设置日期按钮
+        date_str = self.start_date.text()
+        dt = QtCore.QDate.fromString(date_str, "yyyy-MM-dd")
+        # self.ui.dateEdit.setDate(dt)
 
     def page4(self):
 
