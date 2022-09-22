@@ -567,6 +567,9 @@ class MainUi(QtWidgets.QMainWindow):
         checkButton.setObjectName("pushButton")
         checkButton.setText("查询")
 
+        # 布局管理器
+        # self.layout = QtWidgets.QVBoxLayout(form3)
+        # self.layout.setGeometry(QtCore.QRect(60, 120, 800, 400))
         self.horizontalLayoutWidget = QtWidgets.QWidget(form3)
         self.horizontalLayoutWidget.setGeometry(QtCore.QRect(60, 120, 800, 400))
         self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
@@ -575,6 +578,40 @@ class MainUi(QtWidgets.QMainWindow):
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.table = QtWidgets.QTableWidget()
         self.horizontalLayout.addWidget(self.table)
+        # self.layout.addWidget(self.horizontalLayoutWidget)
+
+        self.totalPageLabel = QtWidgets.QLabel()
+        self.currentPageLabel = QtWidgets.QLabel()
+        self.switchPageLineEdit = QtWidgets.QLineEdit()
+        self.prevButton = QtWidgets.QPushButton("上一页")
+        self.nextButton = QtWidgets.QPushButton("下一页")
+        self.switchPageButton = QtWidgets.QPushButton("跳到")
+        # 当前页
+        self.currentPage = 1
+        # 总页数
+        self.totalPage = 1
+        # 总记录数
+        self.totalRecordCount = None
+        # 每页记录数
+        self.pageRecordCount = 4
+
+        page_widget = QtWidgets.QWidget(form3)
+        page_widget.setGeometry(QtCore.QRect(60, 530, 800, 50))
+
+        hLayout = QtWidgets.QHBoxLayout(page_widget)
+        hLayout.addWidget(self.prevButton)
+        hLayout.addWidget(self.nextButton)
+        hLayout.addWidget(QtWidgets.QLabel("跳转到"))
+        self.switchPageLineEdit.setFixedWidth(40)
+        hLayout.addWidget(self.switchPageLineEdit)
+        hLayout.addWidget(QtWidgets.QLabel("页"))
+        hLayout.addWidget(self.switchPageButton)
+        hLayout.addWidget(QtWidgets.QLabel("当前页："))
+        hLayout.addWidget(self.currentPageLabel)
+        hLayout.addWidget(QtWidgets.QLabel("总页数："))
+        hLayout.addWidget(self.totalPageLabel)
+        hLayout.addStretch(1)
+
 
         form3.setStyleSheet('''
                                   QWidget#right_widget{
