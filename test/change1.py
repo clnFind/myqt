@@ -305,7 +305,7 @@ class MainUi(QtWidgets.QMainWindow):
         lineEdit_2.setObjectName("lineEdit_2")
 
         label_4 = QtWidgets.QLabel(form1)
-        label_4.setGeometry (QtCore.QRect(30, 120, 52, 31))
+        label_4.setGeometry (QtCore.QRect(30, 100, 52, 31))
         # label_4.setStyleSheet("color:#f4f9ff;\n"
         #                            "font:12pt \'Arial\';\n"
         #                            "border-radius: 10px;\n"
@@ -314,7 +314,7 @@ class MainUi(QtWidgets.QMainWindow):
         label_4.setText("止盈利差")
 
         lineEdit_4 = QtWidgets.QLineEdit(form1)
-        lineEdit_4.setGeometry (QtCore.QRect(100, 120, 111, 31))
+        lineEdit_4.setGeometry (QtCore.QRect(100, 100, 111, 31))
         lineEdit_4.setStyleSheet("font:12pt \'Arial\';\n"
                                       "border-radius: 10px;\n"
                                       "background: white;")
@@ -325,7 +325,7 @@ class MainUi(QtWidgets.QMainWindow):
 
 
         label_5 = QtWidgets.QLabel(form1)
-        label_5.setGeometry (QtCore.QRect(270, 120, 71, 31))
+        label_5.setGeometry (QtCore.QRect(270, 100, 71, 31))
         # label_5.setStyleSheet("color:#f4f9ff;\n"
         #                            "font:12pt \'Arial\';\n"
         #                            "border-radius: 10px;\n"
@@ -334,7 +334,7 @@ class MainUi(QtWidgets.QMainWindow):
         label_5.setText("补仓利差")
 
         lineEdit_5 = QtWidgets.QLineEdit(form1)
-        lineEdit_5.setGeometry (QtCore.QRect(360, 120, 111, 31))
+        lineEdit_5.setGeometry (QtCore.QRect(360, 100, 111, 31))
         lineEdit_5.setStyleSheet("font:12pt \'Arial\';\n"
                                        "border-radius: 10px;\n"
                                        "background: white;")
@@ -344,7 +344,7 @@ class MainUi(QtWidgets.QMainWindow):
 
 
         label_6 = QtWidgets.QLabel(form1)
-        label_6.setGeometry (QtCore.QRect(561, 120, 61, 31))
+        label_6.setGeometry (QtCore.QRect(561, 100, 61, 31))
         # label_6.setStyleSheet("color:#f4f9ff;\n"
         #                            "font:12pt \'Arial\';\n"
         #                            "border-radius: 10px;\n"
@@ -352,7 +352,7 @@ class MainUi(QtWidgets.QMainWindow):
         label_6.setObjectName("label_6")
         label_6.setText("补仓金额")
         lineEdit_6 = QtWidgets.QLineEdit(form1)
-        lineEdit_6.setGeometry (QtCore.QRect(640, 120, 111, 31))
+        lineEdit_6.setGeometry (QtCore.QRect(640, 100, 111, 31))
         lineEdit_6.setStyleSheet("font:12pt \'Arial\';\n"
                                       "border-radius: 10px;\n"
                                       "background: white;")
@@ -383,7 +383,59 @@ class MainUi(QtWidgets.QMainWindow):
                     }
                 ''')
 
+        label_7 = QtWidgets.QLabel(form1)
+        label_7.setGeometry(QtCore.QRect(30, 150, 52, 31))
+        # label_4.setStyleSheet("color:#f4f9ff;\n"
+        #                            "font:12pt \'Arial\';\n"
+        #                            "border-radius: 10px;\n"
+        #                            "background: #171B2B;")
+        label_7.setObjectName("label_7")
+        label_7.setText("停止补仓")
 
+        lineEdit_7 = QtWidgets.QLineEdit(form1)
+        lineEdit_7.setGeometry(QtCore.QRect(100, 150, 111, 31))
+        lineEdit_7.setStyleSheet("font:12pt \'Arial\';\n"
+                                 "border-radius: 10px;\n"
+                                 "background: white;")
+        lineEdit_7.setText("")
+        lineEdit_7.setObjectName("lineEdit_7")
+
+        label_8 = QtWidgets.QLabel(form1)
+        label_8.setGeometry(QtCore.QRect(270, 150, 71, 31))
+        # label_5.setStyleSheet("color:#f4f9ff;\n"
+        #                            "font:12pt \'Arial\';\n"
+        #                            "border-radius: 10px;\n"
+        #                            "background: #171B2B;")
+        label_8.setObjectName("label_5")
+        label_8.setText("止损")
+
+        lineEdit_8 = QtWidgets.QLineEdit(form1)
+        lineEdit_8.setGeometry(QtCore.QRect(360, 150, 111, 31))
+        lineEdit_8.setStyleSheet("font:12pt \'Arial\';\n"
+                                 "border-radius: 10px;\n"
+                                 "background: white;")
+        lineEdit_8.setText("")
+        lineEdit_8.setObjectName("lineEdit_8")
+
+        start_button = QtWidgets.QPushButton(form1)
+        start_button.setGeometry(QtCore.QRect(561, 150, 75, 32))
+        start_button.setStyleSheet("color:#f4f9ff;\n"
+                                 "font:12pt \'Arial\';\n"
+                                 "border-radius: 14px;\n"
+                                 "background: #171B2B;\n"
+                                 "")
+        start_button.setObjectName("startButton")
+        start_button.setText("启动")
+
+        end_button = QtWidgets.QPushButton(form1)
+        end_button.setGeometry(QtCore.QRect(680, 150, 75, 32))
+        end_button.setStyleSheet("color:#f4f9ff;\n"
+                                   "font:12pt \'Arial\';\n"
+                                   "border-radius: 14px;\n"
+                                   "background: #171B2B;\n"
+                                   "")
+        end_button.setObjectName("endButton")
+        end_button.setText("暂停")
 
         return form1
 
