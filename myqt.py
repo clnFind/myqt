@@ -3,7 +3,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import sys
 import qtawesome
-from PyQt5.QtSql import QSqlQuery
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
