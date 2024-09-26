@@ -1,5 +1,4 @@
 # coding:utf-8
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 import sys
 import qtawesome
@@ -7,8 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 
-
-# 设置中文字体
+# 绘图设置中文字体
 plt.rcParams['font.sans-serif'] = ['SimHei']
 plt.rcParams['axes.unicode_minus'] = False
 # 设置字体大小
@@ -22,7 +20,7 @@ class MainUi(QtWidgets.QMainWindow):
         super().__init__()
         self.init_ui()
         self.showselect = 0
-
+    # 主窗口初始化
     def init_ui(self):
         # self.setFixedSize(960, 700)
         self.available_geometry = QtWidgets.QDesktopWidget().availableGeometry()
@@ -40,12 +38,12 @@ class MainUi(QtWidgets.QMainWindow):
         self.dataDisplay = QtWidgets.QStackedWidget()  # 右侧层叠窗口
         # self.dataDisplay.addWidget(self.page1())
         # self.dataDisplay.addWidget(self.page2())
-        self.dataDisplay.addWidget(self.page3())
-        self.dataDisplay.addWidget(self.page4())
+        self.dataDisplay.addWidget(self.page1())
+        self.dataDisplay.addWidget(self.page2())
         # self.init_right()  # 初始化右侧空间
 
-        self.main_layout.addWidget(self.left_widget, 0, 0, 12, 2)  # 左侧部件在第0行第0列，占8行3列
-        self.main_layout.addWidget(self.dataDisplay, 0, 2, 12, 10)  # 右侧部件在第0行第3列，占8行9列
+        self.main_layout.addWidget(self.left_widget, 0, 0, 12, 2)  # 左侧部件在第0行第0列，占12行2列
+        self.main_layout.addWidget(self.dataDisplay, 0, 2, 12, 10)  # 右侧部件在第0行第2列，占12行10列
         self.setCentralWidget(self.main_widget)  # 设置窗口主部件
 
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)  # 隐藏边框
@@ -64,6 +62,7 @@ class MainUi(QtWidgets.QMainWindow):
         self.setWindowOpacity(0.9)  # 设置窗口透明度
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)  # 设置窗口背景透明
 
+    # 左侧窗口初始化
     def init_left(self):
         self.left_widget = QtWidgets.QWidget()  # 创建左侧部件
         self.left_widget.setObjectName('left_widget')
@@ -71,7 +70,7 @@ class MainUi(QtWidgets.QMainWindow):
         self.left_widget.setLayout(self.left_layout)  # 设置左侧部件布局为网格
 
         self.left_close = QtWidgets.QPushButton("")  # 关闭按钮
-        self.left_visit = QtWidgets.QPushButton("")  # 空白按钮
+        self.left_visit = QtWidgets.QPushButton("")  # 全屏按钮
         self.left_mini = QtWidgets.QPushButton("")  # 最小化按钮
 
         self.left_close.setFixedSize(15, 15)  # 设置关闭按钮的大小
@@ -104,6 +103,7 @@ class MainUi(QtWidgets.QMainWindow):
         self.left_button_7 = QtWidgets.QPushButton()
         self.left_button_7.setObjectName('left_button7')
 
+        # 0, 0, 1, 1 表示第一行第一列，占用1行1列
         self.left_layout.addWidget(self.left_mini, 0, 0, 1, 1)
         self.left_layout.addWidget(self.left_close, 0, 2, 1, 1)
         self.left_layout.addWidget(self.left_visit, 0, 1, 1, 1)
@@ -134,6 +134,7 @@ class MainUi(QtWidgets.QMainWindow):
           QPushButton#left_button:hover{border-left:4px solid red;font-weight:700;}
         ''')
 
+    # 右侧窗口初始化
     def init_right(self):
         self.right_widget = QtWidgets.QWidget()  # 创建右侧部件
         self.right_widget.setObjectName('right_widget')
@@ -158,15 +159,18 @@ class MainUi(QtWidgets.QMainWindow):
           }
         ''')
 
+    # 菜单图形生成点击跳转
     def on_left_button3_clicked(self):
         # 显示第一个page
         self.dataDisplay.setCurrentIndex(0)
 
+    # 菜单服务与帮助点击跳转
     def on_left_button4_clicked(self):
         # 显示第二个page
         self.dataDisplay.setCurrentIndex(1)
 
     # 隐藏边框后实现窗口移动
+    # 鼠标点击事件
     def mousePressEvent(self, event):
         if event.button() == QtCore.Qt.LeftButton:
             self.m_flag = True
@@ -174,20 +178,25 @@ class MainUi(QtWidgets.QMainWindow):
             event.accept()
             # self.setCursor(QtGui.QCursor(QtCore.Qt.OpenHandCursor))  # 更改鼠标图标
 
+    # 鼠标移动事件
     def mouseMoveEvent(self, QMouseEvent):
         if QtCore.Qt.LeftButton and self.m_flag:
             self.move(QMouseEvent.globalPos() - self.m_Position)  # 更改窗口位置
             QMouseEvent.accept()
 
+    # 鼠标释放事件
     def mouseReleaseEvent(self, QMouseEvent):
         self.m_flag = False
 
+    # 窗口最小化
     def click_mini(self):
         self.showMinimized()  # 最小化
 
+    # 窗口关闭
     def click_close(self):
         self.close()
 
+    # 窗口全屏
     def click_max(self):
         # print(self.showselect)
         self.showselect = self.showselect + 1
@@ -196,9 +205,9 @@ class MainUi(QtWidgets.QMainWindow):
         else:
             self.showNormal()
 
-
-    def page3(self):
-        # 设置第三个面板
+    # 设置右侧面板
+    def page1(self):
+        # 设置第1个面板
         form3 = QtWidgets.QWidget()
         form3.setObjectName('right_widget')
 
@@ -267,6 +276,7 @@ class MainUi(QtWidgets.QMainWindow):
                                 ''')
         return form3
 
+    # 绘图
     def plot_waveform(self):  # 设置日期按钮
         # 生成波形数据
         t = np.linspace(0, 1, 500)  # 时间轴
@@ -291,14 +301,16 @@ class MainUi(QtWidgets.QMainWindow):
         self.table.setCellWidget(0, 0, cell_widget)
         canvas.draw()  # 绘制图形
 
+    # 表格清空
     def clear_table(self):
         # 清空表格
         self.table.clearContents()
         # self.table.setRowCount(0)  # 也可以选择清空行数
 
-    def page4(self):
+    # 设置右侧面板
+    def page2(self):
 
-        # 设置第四个面板
+        # 设置第2个面板
         form4 = QtWidgets.QWidget()
         form4.setObjectName('right_widget')
         formLayout4 = QtWidgets.QHBoxLayout(form4)
