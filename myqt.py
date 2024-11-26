@@ -281,6 +281,7 @@ class MainUi(QtWidgets.QMainWindow):
         # 生成波形数据
         t = np.linspace(0, 1, 500)  # 时间轴
         y = np.sin(2 * np.pi * 5 * t)  # 生成正弦波
+        # y = np.sin("yyyyyyyy")
 
         # 创建图形
         fig, ax = plt.subplots()

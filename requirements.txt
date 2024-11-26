@@ -2,4 +2,6 @@
 # QDarkStyle==3.0.2
 PyQt5==5.15.7
 QtAwesome==1.1.1
-pysqlite3
+matplotlib
+numpy
+# pysqlite3
