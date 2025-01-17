@@ -244,5 +244,5 @@ class Plot_Thread(QThread):
 if __name__ == "__main__":
     app = QApplication(sys.argv)  # 调用父类构造函数，创建窗体
     form = QmyDialog()  # 创建UI对象
-    form.show()  #
-    sys.exit(app.exec())  #
+    form.show()
+    sys.exit(app.exec())
