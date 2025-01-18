@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QFrame
-from PyQt5.QtCore import Qt, QTimer
+from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtGui import QFontDatabase, QFont
 from serial import Serial
 import threading
@@ -7,11 +7,14 @@ import queue
 
 
 class SerialHandler:
+    """串口读取处理类，使用信号与槽传递数据"""
+    data_received = pyqtSignal(dict)  # 定义信号，用于发送数据给主界面
+
     def __init__(self, port, baud_rate):
         self.port = port
         self.baud_rate = baud_rate
         self.running = False
-        self.data_queue = queue.Queue()
+        # self.data_queue = queue.Queue()
 
     def start(self):
         """启动串口读取线程"""
@@ -34,7 +37,8 @@ class SerialHandler:
                     if raw_data:
                         print(f"[蓝牙接收信息]: {raw_data}")
                         parsed_data = self.parse_data(raw_data)
-                        self.data_queue.put(parsed_data)
+                        # self.data_queue.put(parsed_data)
+                        self.data_received.emit(parsed_data)  # 通过信号传递数据
         except Exception as e:
             print(f"串口错误: {e}")
 
@@ -61,11 +65,11 @@ class SerialHandler:
         print(f"解析后的数据: {parsed_result}")
         return parsed_result
 
-    def get_latest_data(self):
-        """获取最新数据"""
-        while not self.data_queue.empty():
-            latest_data = self.data_queue.get()
-        return latest_data if "latest_data" in locals() else {"呼吸率": "0", "心率": "0", "跌倒状态": "无人跌倒"}
+    # def get_latest_data(self):
+    #     """获取最新数据"""
+    #     while not self.data_queue.empty():
+    #         latest_data = self.data_queue.get()
+    #     return latest_data if "latest_data" in locals() else {"呼吸率": "0", "心率": "0", "跌倒状态": "无人跌倒"}
 
 
 class DigitalLabel(QLabel):
@@ -104,17 +108,20 @@ class MainWindow(QWidget):
 
         # 串口处理
         self.serial_handler = SerialHandler(port="COM3", baud_rate=115200)
+
+        self.serial_handler.data_received.connect(self.update_ui_with_data)  # 连接信号与槽
+
         self.serial_handler.start()
 
-        # 定时器更新数据（2秒间隔）
-        self.timer = QTimer(self)
-        self.timer.timeout.connect(self.update_ui_with_data)
-        self.timer.start(2000)  # 每2秒更新一次
+        # # 定时器更新数据（2秒间隔）
+        # self.timer = QTimer(self)
+        # self.timer.timeout.connect(self.update_ui_with_data)
+        # self.timer.start(2000)  # 每2秒更新一次
 
         # 定时器处理跌倒状态恢复
-        self.fall_status_reset_timer = QTimer(self)
-        self.fall_status_reset_timer.setSingleShot(True)
-        self.fall_status_reset_timer.timeout.connect(self.reset_fall_status)
+        # self.fall_status_reset_timer = QTimer(self)
+        # self.fall_status_reset_timer.setSingleShot(True)
+        # self.fall_status_reset_timer.timeout.connect(self.reset_fall_status)
 
         self.fall_status_override = False  # 用于标记是否处于跌倒状态
 
@@ -151,18 +158,18 @@ class MainWindow(QWidget):
         layout.addWidget(row_frame)
         return value_label
 
-    def update_ui_with_data(self):
+    def update_ui_with_data(self, parsed_data):
         """从串口处理器更新数据"""
-        latest_data = self.serial_handler.get_latest_data()
-        respiration_rate = latest_data.get("呼吸率", "0")
-        heart_rate = latest_data.get("心率", "0")
-        fall_status = latest_data.get("跌倒状态", "无人跌倒")
+        # latest_data = self.serial_handler.get_latest_data()
+        respiration_rate = parsed_data.get("呼吸率", "0")
+        heart_rate = parsed_data.get("心率", "0")
+        fall_status = parsed_data.get("跌倒状态", "无人跌倒")
 
         # 如果是跌倒状态
         if fall_status == "有人跌倒" and not self.fall_status_override:
             self.fall_status_override = True
             self.fall_status_label.setText(fall_status)
-            self.fall_status_reset_timer.start(10000)  # 10 秒后恢复
+            # self.fall_status_reset_timer.start(10000)  # 10 秒后恢复
 
         # 非跌倒状态更新
         if not self.fall_status_override:
@@ -172,10 +179,10 @@ class MainWindow(QWidget):
 
         print(f"界面更新 - 呼吸率: {respiration_rate}, 心率: {heart_rate}, 跌倒状态: {fall_status}")
 
-    def reset_fall_status(self):
-        """重置跌倒状态"""
-        self.fall_status_override = False
-        self.fall_status_label.setText("无人跌倒")
+    # def reset_fall_status(self):
+    #     """重置跌倒状态"""
+    #     self.fall_status_override = False
+    #     self.fall_status_label.setText("无人跌倒")
 
     def closeEvent(self, event):
         """关闭窗口时释放资源"""
