@@ -1,16 +1,16 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QFrame
-from PyQt5.QtCore import Qt, pyqtSignal
+from PyQt5.QtCore import Qt, pyqtSignal, QThread
 from PyQt5.QtGui import QFontDatabase, QFont
 from serial import Serial
 import threading
-import queue
+import time
 
-
-class SerialHandler:
+class SerialHandler(QThread):
     """串口读取处理类，使用信号与槽传递数据"""
     data_received = pyqtSignal(dict)  # 定义信号，用于发送数据给主界面
 
     def __init__(self, port, baud_rate):
+        super().__init__()
         self.port = port
         self.baud_rate = baud_rate
         self.running = False
@@ -123,7 +123,7 @@ class MainWindow(QWidget):
         # self.fall_status_reset_timer.setSingleShot(True)
         # self.fall_status_reset_timer.timeout.connect(self.reset_fall_status)
 
-        self.fall_status_override = False  # 用于标记是否处于跌倒状态
+        # self.fall_status_override = False  # 用于标记是否处于跌倒状态
 
     def initUI(self):
         # 主布局
@@ -166,16 +166,19 @@ class MainWindow(QWidget):
         fall_status = parsed_data.get("跌倒状态", "无人跌倒")
 
         # 如果是跌倒状态
-        if fall_status == "有人跌倒" and not self.fall_status_override:
-            self.fall_status_override = True
-            self.fall_status_label.setText(fall_status)
-            # self.fall_status_reset_timer.start(10000)  # 10 秒后恢复
+        # if fall_status == "有人跌倒" and not self.fall_status_override:
+        #     self.fall_status_override = True
+        #     self.fall_status_label.setText(fall_status)
+            # time.sleep(10)
+            # self.fall_status_label.setText("无人跌倒")
 
+            # self.fall_status_reset_timer.start(10000)  # 10 秒后恢复
         # 非跌倒状态更新
-        if not self.fall_status_override:
-            self.respiration_label.setText(respiration_rate)
-            self.heart_rate_label.setText(heart_rate)
-            self.fall_status_label.setText(fall_status)
+        # if not self.fall_status_override:
+
+        self.respiration_label.setText(respiration_rate)
+        self.heart_rate_label.setText(heart_rate)
+        self.fall_status_label.setText(fall_status)
 
         print(f"界面更新 - 呼吸率: {respiration_rate}, 心率: {heart_rate}, 跌倒状态: {fall_status}")
 
